@@ -8,6 +8,7 @@ using spacetraders.Enum;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Security.Authentication;
 
 namespace spacetraders.Core
 {
@@ -249,6 +250,56 @@ namespace spacetraders.Core
         }
 
         // Contracts -------------------------------------------------------------------------------
+        public async Task<(Contract[], Meta)> GetContracts(Int32 page, Int32 limit)
+        {
+            Request req = new(Http.Enum.RequestType.GET, $"my/contracts?page={page}&limit={limit}", "");
+            return await pool.AddRequest < (Contract[], Meta)>(req);
+        }
+
+
+        public async Task<Contract> GetContract(string ContractID)
+        {
+            Request req = new(Http.Enum.RequestType.GET, $"my/contracts/{ContractID}", "");
+            return await pool.AddRequest<Contract>(req);
+        }
+
+
+        public async Task<(Agent, Contract)> AcceptContract(string ContractID)
+        {
+            Request req = new(Http.Enum.RequestType.POST, $"my/contracts/{ContractID}/accept", "");
+            return await pool.AddRequest<(Agent, Contract)>(req);
+        }
+
+
+        public async Task<(Contract, ShipCargo)> DeliverContract(string ContractID, string ShipSymbol, string TradeSymbol, Int32 units)
+        {
+            Request req = new(Http.Enum.RequestType.POST, $"my/contracts/{ContractID}/deliver", "{" + $"\"tradeSymbol\": \"{TradeSymbol}\", \"units\": {units}, \"shipSymbol\": \"{ShipSymbol}\"" + "}");
+            return await pool.AddRequest<(Contract, ShipCargo)>(req);
+        }
+
+
+        public async Task<(Agent, Contract)> FulfillContract(string ContractID)
+        {
+            Request req = new(Http.Enum.RequestType.POST, $"my/contracts/{ContractID}/fulfill", "");
+            return await pool.AddRequest<(Agent, Contract)>(req);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public async Task<BaseURLResponse> GetInfo()
         {
             Request req = new(Http.Enum.RequestType.GET, $"", "");
