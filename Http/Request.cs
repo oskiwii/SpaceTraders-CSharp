@@ -110,6 +110,7 @@ namespace spacetraders.Http
             catch (Exception e)
             {
                 Constants.Log.Error(e.Message);
+                throw e;
             }
         }
     }
@@ -166,6 +167,7 @@ namespace spacetraders.Http
                     JsonNode ErrorMaybe = JsonObject.Parse(resp.Content)["error"];
 
                     // Error checking
+                    Constants.Log.Debug($"[ RequestSender ] Checking response for errors...");
                     if (ErrorMaybe != null)
                     {
                         string ErrorMessage = _ErrorString(resp);
@@ -197,6 +199,7 @@ namespace spacetraders.Http
                     ErrorMaybe = JsonObject.Parse(resp.Content)["error"];
 
                     // Error checking
+                    Constants.Log.Debug($"[ RequestSender ] Checking response for errors...");
                     if (ErrorMaybe != null)
                     {
                         string ErrorMessage = _ErrorString(resp);
@@ -228,6 +231,7 @@ namespace spacetraders.Http
                     ErrorMaybe = JsonObject.Parse(resp.Content)["error"];
 
                     // Error checking
+                    Constants.Log.Debug($"[ RequestSender ] Checking response for errors...");
                     if (ErrorMaybe != null)
                     {
                         string ErrorMessage = _ErrorString(resp);
