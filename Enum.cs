@@ -26,18 +26,21 @@ namespace spacetraders.Enum
         SHUTTLE
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum TransactionType
     {
         PURCHASE,
         SELL
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum RotationType
     {
         STRICT,
         RELAXED
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum WaypointType
     {
         PLANET,
@@ -51,6 +54,7 @@ namespace spacetraders.Enum
         GRAVITY_WELL
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum TradeGoodSupply
     {
         SCARCE,
@@ -59,6 +63,7 @@ namespace spacetraders.Enum
         ABUNDANT
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum EngineSymbol
     {
         ENGINE_IMPULSE_DRIVE_I,
@@ -67,6 +72,7 @@ namespace spacetraders.Enum
         ENGINE_HYPER_DRIVE_I
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum FrameSymbol
     {
         FRAME_PROBE,
@@ -86,6 +92,7 @@ namespace spacetraders.Enum
         FRAME_CARRIER
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ShipModuleSymbol
     {
         MODULE_MINERAL_PROCESSOR_I,
@@ -107,6 +114,7 @@ namespace spacetraders.Enum
         MODULE_SHIELD_GENERATOR_II
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum MountSymbol
     {
         MOUNT_GAS_SIPHON_I,
@@ -126,6 +134,7 @@ namespace spacetraders.Enum
         MOUNT_TURRET_I
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum DepositType
     {
         QUARTZ_SAND,
@@ -144,6 +153,7 @@ namespace spacetraders.Enum
         MERITIUM_ORE
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ShipStatus
     {
         IN_TRANSIT,
@@ -151,6 +161,7 @@ namespace spacetraders.Enum
         DOCKED
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum FlightMode
     {
         DRIFT,
@@ -159,6 +170,7 @@ namespace spacetraders.Enum
         BURN
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ReactorSymbol
     {
         REACTOR_SOLAR_I,
@@ -168,6 +180,7 @@ namespace spacetraders.Enum
         REACTOR_ANTIMATTER_I
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ShipRole
     {
         FABRICATOR,
@@ -186,6 +199,7 @@ namespace spacetraders.Enum
         REFINERY
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ShipType
     {
         SHIP_PROBE,
@@ -200,6 +214,7 @@ namespace spacetraders.Enum
         SHIP_REFINING_FREIGHTER
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum SurveySize
     {
         SMALL,
@@ -207,6 +222,7 @@ namespace spacetraders.Enum
         LARGE
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum TradeSymbol
     {
         PRECIOUS_STONES,
@@ -321,6 +337,7 @@ namespace spacetraders.Enum
         MOUNT_TURRET_I
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum WaypointTraitSymbol
     {
         UNCHARTED,
