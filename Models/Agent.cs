@@ -14,20 +14,6 @@ namespace spacetraders.Models
         public string symbol { get; set; }
         public string headquarters { get; set; }
         public Int32 credits { get; set; }
-
-        public async Task<Agent> Refresh()
-        {
-            string URL = $"{Core.Constants.BaseURL}/my/agent";
-            Request req = new(Http.Enum.RequestType.GET, URL, "");
-            Agent temp = await Core.Constants.pool.AddRequest<Agent>(req);
-
-            this.credits = temp.credits;
-            this.headquarters = temp.headquarters;
-            this.accountID = temp.accountID;
-            this.symbol = temp.symbol;
-
-            return this;
-        }
     }
 }
  
