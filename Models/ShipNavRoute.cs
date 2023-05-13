@@ -11,5 +11,6 @@ namespace spacetraders.Models
         public Destination destination { get; set; }
         public Destination departure { get; set; }
         public DateTime arrival { get; set; }
+        public DateTime departureTime { get; set; }  // May not be included
     }
 }
