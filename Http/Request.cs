@@ -6,6 +6,7 @@ using spacetraders.Core;
 using spacetraders.Exceptions;
 using spacetraders.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace spacetraders.Http
         }
 
         // Add a Request to the queue, and return the item?
-        public async Task<T> AddRequest<T>(Request request)
+        public async Task<string> AddRequest(Request request)
         {
             Constants.Log.Debug($"[ AddRequest ] Adding request to queue");
             Constants.Log.Debug($"[ AddRequest ] Request is to '{request.url}', with JSON '{request.json}'");
@@ -66,8 +67,9 @@ namespace spacetraders.Http
                 }
 
                 //Console.WriteLine("Returning from queue.");
-                Constants.Log.Debug($"[ AddRequest ] Returned, deserialising and returning to caller");
-                return JsonConvert.DeserializeObject<T>(ts.resp);
+                Constants.Log.Debug($"[ AddRequest ] Returned, returning to caller");
+
+                return ts.resp;
             }
             catch (Exception e)
             {
@@ -103,7 +105,7 @@ namespace spacetraders.Http
         {
             try
             {
-                Constants.Log.Information("Starting function '_StartSendingRequests()'");
+                Constants.Log.Debug("Starting function '_StartSendingRequests()'");
                 Task t = Task.Run(_StartSendingRequests);
                 await t.WaitAsync(new CancellationToken());
             }
@@ -151,7 +153,7 @@ namespace spacetraders.Http
             RestRequest req = new();
             string Token = Environment.GetEnvironmentVariable("SPACETRADERS_TOKEN");
 
-            Constants.Log.Information($"[ RequestSender ] Running request with URL {url}");
+            Constants.Log.Debug($"[ RequestSender ] Running request with URL {url}");
 
             req.AddHeader("Authorization", $"Bearer {Token}");
             req.AddStringBody(json, ContentType.Json);
