@@ -28,20 +28,6 @@ namespace spacetraders.Models
 
             return this;
         }
-
-        public async Task<Ship[]> GetShips(int limit, int page)
-        {
-            string URL = $"{Core.Constants.BaseURL}/my/ships?page={page}&limit={limit}";
-            Request req = new(Http.Enum.RequestType.GET, URL, "");
-
-            return await Core.Constants.pool.AddRequest<Ship[]>(req);
-        }
-
-        public async Task GetContracts(int limit, int page)
-        {
-            string URL = $"{Core.Constants.BaseURL}/my/contracts";
-            return;
-        }
     }
 }
  
