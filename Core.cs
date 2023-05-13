@@ -284,46 +284,66 @@ namespace spacetraders.Core
             return await pool.AddRequest<(Agent, Contract)>(req);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public async Task<BaseURLResponse> GetInfo()
+        // Systems -------------------------------------------------------------------------------
+        public async Task<(Models.System[], Meta)> GetSystems(Int32 page, Int32 limit)
         {
-            Request req = new(Http.Enum.RequestType.GET, $"", "");
-            return await pool.AddRequest<BaseURLResponse>(req);
+            Request req = new(Http.Enum.RequestType.GET, $"systems?page={page}&limit={limit}", "");
+            return await pool.AddRequest<(Models.System[], Meta)>(req);
         }
 
+
+        public async Task<Models.System> GetSystem(string SystemWaypoint)
+        {
+            Request req = new(Http.Enum.RequestType.GET, $"systems/{SystemWaypoint}", "");
+            return await pool.AddRequest<Models.System>(req);
+        }
+
+
+        public async Task<(Waypoint[], Meta)> GetWaypoints(string SystemWaypoint, Int32 page, Int32 limit)
+        {
+            Request req = new(Http.Enum.RequestType.GET, $"systems/{SystemWaypoint}/waypoints?page={page}&limit={limit}", "");
+            return await pool.AddRequest <(Waypoint[], Meta)>(req);
+        }
+
+
+        public async Task<Waypoint> GetWaypoint(string SystemSymbol, string WaypointSymbol)
+        {
+            Request req = new(Http.Enum.RequestType.GET, $"systems/{SystemSymbol}/waypoints/{WaypointSymbol}", "");
+            return await pool.AddRequest<Waypoint>(req);
+        }
+
+
+        public async Task<Market> GetMarket(string SystemSymbol, string WaypointSymbol)
+        {
+            Request req = new(Http.Enum.RequestType.GET, $"systems/{SystemSymbol}/waypoints/{WaypointSymbol}/market", "");
+            return await pool.AddRequest<Market>(req);
+        }
+
+
+        public async Task<Shipyard> GetShipyard(string SystemSymbol, string WaypointSymbol)
+        {
+            Request req = new(Http.Enum.RequestType.GET, $"systems/{SystemSymbol}/waypoints/{WaypointSymbol}/shipyard", "");
+            return await pool.AddRequest<Shipyard>(req);
+        }
+
+
+        public async Task<JumpGate> GetJumpGate(string SystemSymbol, string WaypointSymbol)
+        {
+            Request req = new(Http.Enum.RequestType.GET, $"systems/{SystemSymbol}/waypoints/{WaypointSymbol}/jump-gate", "");
+            return await pool.AddRequest<JumpGate>(req);
+        }
+        // Systems -------------------------------------------------------------------------------
         public async Task<Agent> GetAgent()
         {
             Request req = new(Http.Enum.RequestType.GET, $"my/agent", "");
             return await pool.AddRequest<Agent>(req);
         }
 
-        public async Task<Models.System[]> GetSystems(int limit, int page)
+
+        public async Task<BaseURLResponse> GetInfo()
         {
-            Request req = new(spacetraders.Http.Enum.RequestType.GET, $"systems?page={page}&limit={limit}", "");
-            return await pool.AddRequest<Models.System[]>(req);
-        }
-
-
-
-        public async Task<Waypoint[]> GetWaypointForSystem(Models.System system, int limit, int page)
-        {
-            Request req = new(Http.Enum.RequestType.GET, $"systems/{system.symbol}/waypoints?page={page}&limit={limit}", "");
-            return await pool.AddRequest<Waypoint[]>(req);
-        }
+            Request req = new(Http.Enum.RequestType.GET, $"", "");
+            return await pool.AddRequest<BaseURLResponse>(req);
+        } 
     }
 }
