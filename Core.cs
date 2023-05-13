@@ -2,12 +2,6 @@
 using spacetraders.Http;
 using Serilog;
 using Serilog.Core;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Collections.Generic;
-using spacetraders.Enum;
-using Microsoft.VisualBasic;
-using Newtonsoft.Json;
-using System.Linq;
 
 namespace spacetraders.Core
 {
@@ -56,8 +50,7 @@ namespace spacetraders.Core
             return req.run();
         }
 
-        // Factions ----------------------------------------------------------------------------
-        
+        // ----------------------------------------------------------------------------------
         public async Task<Faction[]> GetFactions(int limit, int page)
         {
             Request req = new(Http.Enum.RequestType.GET, $"factions?page={page}&limit={limit}", "");
@@ -70,185 +63,8 @@ namespace spacetraders.Core
             return await pool.AddRequest<Faction>(req);
         }
 
-        // Fleet -------------------------------------------------------------------------------
-        
-        public async Task<Ship[]> GetShips(int page, int limit)
-        {
-            Request req = new(Http.Enum.RequestType.GET, $"my/ships?page={page}&limit={limit}", "");
-            return await pool.AddRequest<Ship[]>(req);
-        }
+        // ----------------------------------------------------------------------------------
 
-
-        public async Task<Ship[]> PurchaseShip(ShipType Type, string WaypointSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships", string.Format("{\"shipType\": {}, \"waypointSymbol\": {}}", Type.ToString(), WaypointSymbol));
-            return await pool.AddRequest<Ship[]>(req);
-        }
-
-
-        public async Task<Ship> GetShip(string ShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.GET, $"my/ships/{ShipSymbol}", "");
-            return await pool.AddRequest<Ship>(req);
-        }
-
-        public async Task<ShipCargo> GetShipCargo(string ShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.GET, $"my/ships/{ShipSymbol}/cargo", "");
-            return await pool.AddRequest<ShipCargo>(req);
-        }
-
-
-        public async Task<Nav> OrbitShip(string ShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/orbit", "");
-            return await pool.AddRequest<Nav>(req);
-        }
-
-
-        public async Task<Refinement> Refine(string ShipSymbol, TradeSymbol Produce)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/refine", string.Format("{\"produce\": \"{}\"}", Produce.ToString()));
-            return await pool.AddRequest<Refinement>(req);
-        }
-
-
-        public async Task<(Chart, Waypoint)> CreateChart(string ShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/chart", "");
-            return await pool.AddRequest<(Chart, Waypoint)>(req);
-        }
-
-
-        public async Task<Cooldown> GetShipCooldown(string ShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.GET, $"my/ships/{ShipSymbol}/cooldown", "");
-            return await pool.AddRequest<Cooldown>(req);
-        }
-
-
-        public async Task<Nav> DockShip(string ShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/dock", "");
-            return await pool.AddRequest<Nav>(req);
-        }
-
-
-        public async Task<(Cooldown, Survey[])> CreateSurvey(string ShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/survey", "");
-            return await pool.AddRequest<(Cooldown, Survey[])>(req);
-        }
-
-
-        public async Task<Survey> Extract(string ShipSymbol, Survey survey = null)
-        {
-            if (survey != null)
-            {
-                string JSON = JsonConvert.SerializeObject(survey);
-                Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/extract", string.Format("{\"survey\": {}", JSON));
-                return await pool.AddRequest<Survey>(req);
-            }
-            else
-            {
-                Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/extract", "");
-                return await pool.AddRequest<Survey>(req);
-            }
-        }
-
-
-        public async Task<ShipCargo> Jettison(string ShipSymbol, string symbol, Int32 units)
-        {
-            string JSON = $"\"symbol\": \"{symbol}\", \"units\": {units}";
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/jettison", "{" + JSON + "}");
-            return await pool.AddRequest<ShipCargo>(req);
-        }
-
-
-        public async Task<(Cooldown, Nav)> Jump(string ShipSymbol, string SystemSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/jump", "{"+ $"\"systemSymbol\": \"{SystemSymbol}\"" + "}");
-            return await pool.AddRequest<(Cooldown, Nav)>(req);
-        }
-
-
-        public async Task<(ShipFuel, Nav)> NavigateTo(string ShipSymbol, string WaypointSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/navigate", "{" + $"\"waypointSymbol\": \"{WaypointSymbol}\"" + "}");
-            return await pool.AddRequest<(ShipFuel, Nav)>(req);
-        }
-
-
-        public async Task<Nav> UpdateNav(string ShipSymbol, FlightMode FlightMode)
-        {
-            Request req = new(Http.Enum.RequestType.PUT, $"my/ships/{ShipSymbol}/nav", "{" + $"\"flightMode\": \"{FlightMode.ToString()}\"" + "}");
-            return await pool.AddRequest<Nav>(req);
-        }
-
-
-        public async Task<Nav> GetNav(string ShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.GET, $"my/ships/{ShipSymbol}/nav", "");
-            return await pool.AddRequest<Nav>(req);
-        }
-
-
-        public async Task<(ShipFuel, Nav)> Warp(string ShipSymbol, string WaypointSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/warp", "{" + $"\"waypointSymbol\": \"{WaypointSymbol}\"" + "}");
-            return await pool.AddRequest<(ShipFuel, Nav)>(req);
-        }
-
-
-        public async Task<(Agent, ShipCargo, Transaction)> SellCargo(string ShipSymbol, string CargoSymbol, Int32 units)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/sell", "{" + $"\"symbol\": \"{CargoSymbol}\", \"units\": {units}" + "}");
-            return await pool.AddRequest<(Agent, ShipCargo, Transaction)>(req);
-        }
-
-
-        public async Task<(Cooldown, ScannedSystem[])> ScanSystems(string ShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/scan/systems", "");
-            return await pool.AddRequest<(Cooldown, ScannedSystem[])>(req);
-        }
-
-
-        public async Task<(Cooldown, ScannedWaypoint[])> ScanWaypoints(string ShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/scan/waypoints", "");
-            return await pool.AddRequest<(Cooldown, ScannedWaypoint[])>(req);
-        }
-
-
-        public async Task<(Cooldown, ScannedShip[])> ScanShips(string ShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/scan/ships", "");
-            return await pool.AddRequest<(Cooldown, ScannedShip[])>(req);
-        }
-
-
-        public async Task<(Agent, ShipFuel)> Refuel(string ShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/refuel", "");
-            return await pool.AddRequest<(Agent, ShipFuel)>(req);
-        }
-
-
-        public async Task<(Agent, ShipCargo, Transaction)> PurchaseCargo(string ShipSymbol, string CargoSymbol, Int32 units)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/purchase", "{" + $"\"symbol\": \"{CargoSymbol}\", \"units\": {units}" + "}");
-            return await pool.AddRequest<(Agent, ShipCargo, Transaction)>(req);
-        }
-
-
-        public async Task<ShipCargo> TransferCargo(string ShipSymbol, string TradeSymbol, Int32 units, string OtherShipSymbol)
-        {
-            Request req = new(Http.Enum.RequestType.POST, $"my/ships/{ShipSymbol}/transfer", "{" + $"\"tradeSymbol\": \"{TradeSymbol}\", \"units\": {units}, \"shipSymbol\": \"{OtherShipSymbol}\"" + "}");
-            return await pool.AddRequest<ShipCargo>(req);
-        }
-
-        // Contracts -------------------------------------------------------------------------------
         public async Task<BaseURLResponse> GetInfo()
         {
             Request req = new(Http.Enum.RequestType.GET, $"", "");
