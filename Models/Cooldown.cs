@@ -11,6 +11,6 @@ namespace spacetraders.Models
         public string shipSymbol { get; set; }
         public Int32 totalSeconds { get; set; }
         public Int32 remainingSeconds { get; set; }
-        public DateTime expireation { get; set; }
+        public DateTime expiration { get; set; }
     }
 }
