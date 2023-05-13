@@ -11,7 +11,7 @@ namespace spacetraders.Models
     {
         public string signature { get; set; }
         public string symbol { get; set; }
-        public SurveyDeposit deposits { get; set; }
+        public SurveyDeposit[] deposits { get; set; }
         public DateTime expiration { get; set; }
         public SurveySize size { get; set; }
     }
